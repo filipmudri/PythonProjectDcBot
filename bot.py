@@ -239,6 +239,27 @@ async def top_damage_count_robo(interaction: discord.Interaction):
     _, top_count = check_damage_history(puuid, count=20)
     await interaction.followup.send(f"✅ Hráč **{game_name}#{tag_line}** mal najväčší damage **{top_count}x** z posledných 20 hier.")
 
+    @bot.tree.command(name="last_top_damage_p_mudri")
+    async def last_top_damage_robo(interaction: discord.Interaction):
+        await interaction.response.defer()
+
+        game_name = "Defender145"
+        tag_line = "XTC"
+
+        puuid = get_puuid(game_name, tag_line)
+        if not puuid:
+            await interaction.followup.send("❌ Nepodarilo sa získať PUUID.")
+            return
+
+        last_top, _ = check_damage_history(puuid, count=20)
+        if not last_top:
+            await interaction.followup.send(
+                f"❌ Hráč **{game_name}#{tag_line}** nemal najväčší damage v posledných zápasoch.")
+            return
+
+        time_str = format_time_difference(last_top)
+        await interaction.followup.send(f"✅ Hráč **{game_name}#{tag_line}** mal naposledy najväčší damage {time_str}.")
+
 
 
 # async def damage_check(interaction: discord.Interaction, gameName: str, tagLine: str):
