@@ -7,7 +7,7 @@ Pre správne fungovanie bota je potrebné nainštalovať tieto knižnice:
 
 ```bash
 pip install discord.py requests python-dotenv
-
+```
 🔑 Premenné prostredia (.env)
 Vytvor si v hlavnom priečinku súbor s názvom .env a vlož doň svoje API kľúče. Bot ich automaticky načíta pri štarte:
 
