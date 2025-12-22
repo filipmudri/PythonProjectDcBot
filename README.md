@@ -8,7 +8,7 @@ Pre správne fungovanie bota je potrebné nainštalovať tieto knižnice:
 ```bash
 pip install discord.py requests python-dotenv
 ```
-🔑 Premenné prostredia (.env)
+#🔑 Premenné prostredia (.env)
 Vytvor si v hlavnom priečinku súbor s názvom .env a vlož doň svoje API kľúče. Bot ich automaticky načíta pri štarte:
 
 Útržok kódu
@@ -21,13 +21,13 @@ DISCORD_BOT_TOKEN: Získaš na Discord Developer Portal.
 
 RIOT_API_KEY: Získaš na Riot Developer Portal.
 
-🚀 Spustenie bota
+#🚀 Spustenie bota
 Bota spustíš jednoducho cez terminál:
 
 Bash
 
 python bot.py
-📖 Čo bot dokáže?
+#📖 Čo bot dokáže?
 Bot využíva endpointy Riot API na získanie údajov o zápasoch:
 
 Kontrola poslednej hry: Príkazom /damage_check zistí, či mal hráč v poslednom zápase najvyšší damage zo všetkých 10 hráčov.
@@ -36,7 +36,7 @@ História zápasov: Príkazy ako /top_damage_count prehľadajú posledných 20 z
 
 Časový údaj: Povie ti, pred akou dobou si naposledy reálne "potiahol" hru s najväčším damage.
 
-🕹️ Príklady príkazov
+#🕹️ Príklady príkazov
 /damage_check [meno] [tag] - Skontroluje tvoju poslednú hru.
 
 /last_top_damage [meno] [tag] - Zistí, kedy si mal naposledy najvyšší damage.
