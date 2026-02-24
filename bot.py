@@ -9,7 +9,7 @@ import datetime
 load_dotenv()
 DISCORD_TOKEN = os.getenv("DISCORD_BOT_TOKEN")
 RIOT_API_KEY = os.getenv("RIOT_API_KEY")
-#GUILD_ID = 783290868655194132  # tvoj guild ID
+#GUILD_ID = 783290868655194132  # guild ID
 
 intents = discord.Intents.default()
 bot = commands.Bot(command_prefix="!", intents=intents)
@@ -168,10 +168,10 @@ async def damage_check_robo(interaction: discord.Interaction):
         return
     if result:
         # await interaction.followup.send(f"✅ Hráč **{game_name}#{tag_line}** mal najväčší damage: {max_damage}")
-        await interaction.followup.send(f"✅ ohliver mal najväčší damage: {max_damage} no way")
+        await interaction.followup.send(f"✅ Hráč mal najväčší damage: {max_damage} no way")
     else:
         # await interaction.followup.send(f"❌ Hráč **{game_name}#{tag_line}** nemal najväčší damage. Max: {max_damage}")
-        await interaction.followup.send(f"❌ ohliver nemal najväčší damage bahaha. Max: {max_damage}")
+        await interaction.followup.send(f"❌ Hráč nemal najväčší damage. Max: {max_damage}")
 
     @bot.tree.command(name="last_top_damage")
     async def last_top_damage(interaction: discord.Interaction, game_name: str, tag_line: str):
