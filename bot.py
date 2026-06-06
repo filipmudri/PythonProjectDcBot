@@ -9,7 +9,6 @@ import datetime
 load_dotenv()
 DISCORD_TOKEN = os.getenv("DISCORD_BOT_TOKEN")
 RIOT_API_KEY = os.getenv("RIOT_API_KEY")
-#GUILD_ID = 783290868655194132  # guild ID
 
 intents = discord.Intents.default()
 bot = commands.Bot(command_prefix="!", intents=intents)
@@ -41,8 +40,6 @@ def had_highest_damage(puuid: str, match_id: str):
     damages = [(p["puuid"], p["totalDamageDealtToChampions"]) for p in participants]
     max_damage = max(damages, key=lambda x: x[1])
     return max_damage[0] == puuid, max(damages, key=lambda x: x[1])[1]
-
-import datetime
 
 def get_match_ids(puuid: str, count: int = 20):
     """Získa posledných X match ID pre hráča"""
@@ -108,12 +105,6 @@ def format_time_difference(dt: datetime.datetime):
 async def on_ready():
     print(f"✅ Prihlásený ako {bot.user}")
 
-    #guild = discord.Object(id=GUILD_ID)
-
-    # Vymazať staré príkazy
-    #await bot.tree.sync(guild=guild)  # nutné pre synchronizáciu
-    #print("🔄 Slash commands synchronizované pre guild.")
-
     try:
         synced = await bot.tree.sync()
         print(f"Synced: {len(synced)} command(s)")
@@ -146,34 +137,9 @@ async def damage_check(interaction: discord.Interaction, game_name: str, tag_lin
     else:
         await interaction.followup.send(f"❌ Hráč **{game_name}#{tag_line}** nemal najväčší damage. Max: {max_damage}")
 
-@bot.tree.command(name="damage_check_robo")
-async def damage_check_robo(interaction: discord.Interaction):
-    await interaction.response.defer()
 
-    # pevne nastavené meno a tagline
-    game_name = "RoboFico"
-    tag_line = "SMER"
 
-    puuid = get_puuid(game_name, tag_line)
-    if not puuid:
-        await interaction.followup.send("❌ Nepodarilo sa získať PUUID.")
-        return
-    match_id = get_last_match(puuid)
-    if not match_id:
-        await interaction.followup.send("❌ Nepodarilo sa získať posledný zápas.")
-        return
-    result, max_damage = had_highest_damage(puuid, match_id)
-    if result is None:
-        await interaction.followup.send("❌ Chyba pri načítaní detailu zápasu.")
-        return
-    if result:
-        # await interaction.followup.send(f"✅ Hráč **{game_name}#{tag_line}** mal najväčší damage: {max_damage}")
-        await interaction.followup.send(f"✅ Hráč mal najväčší damage: {max_damage} no way")
-    else:
-        # await interaction.followup.send(f"❌ Hráč **{game_name}#{tag_line}** nemal najväčší damage. Max: {max_damage}")
-        await interaction.followup.send(f"❌ Hráč nemal najväčší damage. Max: {max_damage}")
-
-    @bot.tree.command(name="last_top_damage")
+@bot.tree.command(name="last_top_damage")
     async def last_top_damage(interaction: discord.Interaction, game_name: str, tag_line: str):
         await interaction.response.defer()
         puuid = get_puuid(game_name, tag_line)
@@ -190,7 +156,7 @@ async def damage_check_robo(interaction: discord.Interaction):
         time_str = format_time_difference(last_top)
         await interaction.followup.send(f"✅ Hráč **{game_name}#{tag_line}** mal naposledy najväčší damage {time_str}.")
 
-    @bot.tree.command(name="top_damage_count")
+@bot.tree.command(name="top_damage_count")
     async def top_damage_count(interaction: discord.Interaction, game_name: str, tag_line: str):
         await interaction.response.defer()
         puuid = get_puuid(game_name, tag_line)
@@ -201,84 +167,3 @@ async def damage_check_robo(interaction: discord.Interaction):
         _, top_count = check_damage_history(puuid, count=20)
         await interaction.followup.send(
             f"✅ Hráč **{game_name}#{tag_line}** mal najväčší damage **{top_count}x** z posledných 20 hier.")
-
-
-@bot.tree.command(name="last_top_damage_robo")
-async def last_top_damage_robo(interaction: discord.Interaction):
-    await interaction.response.defer()
-
-    game_name = "RoboFico"
-    tag_line = "SMER"
-
-    puuid = get_puuid(game_name, tag_line)
-    if not puuid:
-        await interaction.followup.send("❌ Nepodarilo sa získať PUUID.")
-        return
-
-    last_top, _ = check_damage_history(puuid, count=20)
-    if not last_top:
-        await interaction.followup.send(f"❌ Hráč **{game_name}#{tag_line}** nemal najväčší damage v posledných zápasoch.")
-        return
-
-    time_str = format_time_difference(last_top)
-    await interaction.followup.send(f"✅ Hráč **{game_name}#{tag_line}** mal naposledy najväčší damage {time_str}.")
-
-
-@bot.tree.command(name="top_damage_count_robo")
-async def top_damage_count_robo(interaction: discord.Interaction):
-    await interaction.response.defer()
-
-    game_name = "RoboFico"
-    tag_line = "SMER"
-
-    puuid = get_puuid(game_name, tag_line)
-    if not puuid:
-        await interaction.followup.send("❌ Nepodarilo sa získať PUUID.")
-        return
-
-    _, top_count = check_damage_history(puuid, count=20)
-    await interaction.followup.send(f"✅ Hráč **{game_name}#{tag_line}** mal najväčší damage **{top_count}x** z posledných 20 hier.")
-
-    @bot.tree.command(name="last_top_damage_p_mudri")
-    async def last_top_damage_robo(interaction: discord.Interaction):
-        await interaction.response.defer()
-
-        game_name = "Defender145"
-        tag_line = "XTC"
-
-        puuid = get_puuid(game_name, tag_line)
-        if not puuid:
-            await interaction.followup.send("❌ Nepodarilo sa získať PUUID.")
-            return
-
-        last_top, _ = check_damage_history(puuid, count=20)
-        if not last_top:
-            await interaction.followup.send(
-                f"❌ Hráč **{game_name}#{tag_line}** nemal najväčší damage v posledných zápasoch.")
-            return
-
-        time_str = format_time_difference(last_top)
-        await interaction.followup.send(f"✅ Hráč **{game_name}#{tag_line}** mal naposledy najväčší damage {time_str}.")
-
-
-
-# async def damage_check(interaction: discord.Interaction, gameName: str, tagLine: str):
-#     await interaction.response.defer()
-#     puuid = get_puuid(gameName, tagLine)
-#     if not puuid:
-#         await interaction.followup.send("❌ Nepodarilo sa získať PUUID.")
-#         return
-#     match_id = get_last_match(puuid)
-#     if not match_id:
-#         await interaction.followup.send("❌ Nepodarilo sa získať posledný zápas.")
-#         return
-#     result, max_damage = had_highest_damage(puuid, match_id)
-#     if result is None:
-#         await interaction.followup.send("❌ Chyba pri načítaní detailu zápasu.")
-#         return
-#     if result:
-#         await interaction.followup.send(f"✅ Hráč **{gameName}#{tagLine}** mal najväčší damage: {max_damage}")
-#     else:
-#         await interaction.followup.send(f"❌ Hráč **{gameName}#{tagLine}** nemal najväčší damage. Max: {max_damage}")
-
-bot.run(DISCORD_TOKEN)
