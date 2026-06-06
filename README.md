@@ -11,7 +11,7 @@ damage in your last game or across your recent match history.
 ```bash
 pip install discord.py requests python-dotenv
 ```
-## 🔑 Premenné prostredia (.env)
+## 🔑 Environment Variables (.env)
 Create a `.env` file in the root directory with the following:
 
 ```
