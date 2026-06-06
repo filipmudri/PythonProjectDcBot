@@ -1,66 +1,59 @@
 # 🎮 League of Legends Damage Bot
 
-Jednoduchý Discord bot, ktorý pomocou **Riot API** zisťuje štatistiky poškodenia (damage) hráčov. Bot skontroluje tvoju poslednú hru alebo históriu a vypíše na discorde, či si bol najlepším hráčom v udelenom poškodení.
+A Discord bot that uses the **Riot API** to track damage statistics 
+for League of Legends players. Check whether you dealt the most 
+damage in your last game or across your recent match history.
 
-## 🛠️ Inštalácia
-Pre správne fungovanie bota je potrebné nainštalovať tieto knižnice:
+"Note: Riot API key expires periodically — for a live demo, clone the repo and add your own key."
+
+## 🛠️ Installation
 
 ```bash
 pip install discord.py requests python-dotenv
 ```
 ## 🔑 Premenné prostredia (.env)
-Vytvorte si v hlavnom priečinku súbor s názvom .env a vložte doň svoje API kľúče. Bot ich automaticky načíta pri štarte:
+Create a `.env` file in the root directory with the following:
 
 ```
-DISCORD_BOT_TOKEN=tvoj_discord_bot_token
-
-RIOT_API_KEY=tvoj_riot_api_kluc
+DISCORD_BOT_TOKEN=your_discord_bot_token
+RIOT_API_KEY=your_riot_api_key
 ```
-DISCORD_BOT_TOKEN: Vytvorte bota na [Discord Developer Portal](https://discord.com/developers/applications) a skopírujte jeho token
+- **DISCORD_BOT_TOKEN** — Create a bot at the 
+[Discord Developer Portal](https://discord.com/developers/applications)
+- **RIOT_API_KEY** — Register at the 
+[Riot Developer Portal](https://developer.riotgames.com/)
 
-RIOT_API_KEY: Zaregistrujte sa na [Riot Developer Portal](https://developer.riotgames.com/)
+## 🤖 Adding the Bot to Your Server
 
-## 🤖 Pridajte bota na Discord server
-V Discord Developer Portáli choďte do "OAuth2" → "URL Generator"
+1. Go to **OAuth2 → URL Generator** in the Discord Developer Portal
+2. Select `bot` under **Scopes**
+3. Under **Bot Permissions**, select `Send Messages` 
+and `Use Slash Commands`
+4. Copy the generated URL, open it in your browser, 
+and add the bot to your server
 
-Vyberte "bot" v "SCOPES"
+## 🚀 Running the Bot
 
-V "BOT PERMISSIONS" vyberte:
-
-"Send Messages"
-
-"Use Slash Commands"
-
-Skopírujte vygenerovanú URL, otvorte v prehliadači a pridajte bota na váš server
-
-## 🚀 Spustenie bota
-Bota spustíš jednoducho cez terminál:
-
-Bash
-```
+```bash
 python bot.py
 ```
-## 📖 Čo bot dokáže?
-Bot využíva endpointy Riot API na získanie údajov o zápasoch:
+## 📖 Features
 
-Kontrola poslednej hry: Príkazom ```/damage_check``` zistí, či mal hráč v poslednom zápase najvyšší damage zo všetkých 10 hráčov.
+- **`/damage_check <name> <tag>`** — Checks if the player had 
+the highest damage among all 10 players in their last game
+- **`/last_top_damage <name> <tag>`** — Shows when the player 
+last had the top damage in a game
+- **`/top_damage_count <name> <tag>`** — Counts how many times 
+the player had top damage across their last 20 games
+- **`/hello`** — Basic test command
 
-História zápasov: Príkazy ako ```/top_damage_count``` prehľadajú posledných 20 zápasov a spočítajú, koľkokrát bol hráč "top damager".
+Also includes commands for hardcoded (pre-set) players.
 
-Časový údaj: Povie ti, pred akou dobou si naposledy reálne "potiahol" hru s najväčším damage.
+> Bot is configured for the EU region. 
+> To use a different region, update the endpoints in the code.
 
-## 🕹️ Všeobecné príkazy
-```/hello``` - Základný testovací príkaz
+---
 
-```/damage_check <meno> <tag>``` - Zistí, či hráč mal najvyšší damage v poslednej hre
-
-```/last_top_damage <meno> <tag>``` - Kedy hráč naposledy mal top damage
-
-```/top_damage_count <meno> <tag>``` - Koľkokrát mal top damage z posledných 20 hier
-
-Obsahuje aj príkazy pre natvrdo nastavených hráčov
-
-Bot je nastavený pre EÚ región. Ak chceš použiť iný región, uprav endpointy v kóde.
-
-Bot využíva Riot Games API a nie je spojený so spoločnosťou Riot Games.
-Riot Games, League of Legends sú ochranné známky spoločnosti Riot Games, Inc.
+*This project uses the Riot Games API and is not affiliated 
+with Riot Games, Inc. League of Legends is a trademark 
+of Riot Games, Inc.*
